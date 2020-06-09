@@ -12,19 +12,19 @@ def index():
 
 @app.route('/welcome/<name>')
 def welcome(name):
-    return render_template('api/templates/welcome.html', name=name)
+    return render_template('/welcome.html', name=name)
 
 
 @app.route('/data1')
-def index():
+def data1():
     return {'dataSetResults':[1,2,3,4,5,6,7,8,9,10]}
 
 @app.route('/data2')
-def index():
+def data2():
     return {'dataSetResults':[1,2,3,4,5,6,7,8,9,10]}
 
-@app.route('/data')
-def index():
+@app.route('/data3')
+def data3():
     return {'dataSetResults':[1,2,3,4,5,6,7,8,9,10]}
 
 
