@@ -8,11 +8,11 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return render_template('/dashboard.html')
+    return render_template('dashboard.html')
 
 @app.route('/welcome/<name>')
 def welcome(name):
-    return render_template('/welcome.html', name=name)
+    return render_template('welcome.html', name=name)
 
 
 @app.route('/data1')
