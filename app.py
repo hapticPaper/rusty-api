@@ -2,7 +2,7 @@ from flask import Flask, jsonify, render_template, send_from_directory
 from flask_cors import CORS
 import os
 
-app = Flask(os.path.join('api', __name__))
+app = Flask(os.path.join('rustyAPIserver'))
 CORS(app)
 
 
@@ -12,7 +12,7 @@ def index():
 
 @app.route('/welcome/<name>')
 def welcome(name):
-    return render_template(os.path.join(app.root_path, 'api', 'templates','welcome.html'), name=name)
+    return render_template('/welcome.html', name=name)
 
 
 @app.route('/data1')
@@ -30,7 +30,7 @@ def data3():
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'api', 'static'),
+    return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 if __name__ =='__main__':
