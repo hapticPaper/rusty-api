@@ -6,12 +6,24 @@ app = Flask(os.path.join('api', __name__))
 CORS(app)
 
 
+@app.route('/')
+def index():
+    return render_template('/dashboard.html')
+
 @app.route('/welcome/<name>')
 def welcome(name):
     return render_template('/welcome.html', name=name)
 
 
-@app.route('/')
+@app.route('/data1')
+def index():
+    return {'dataSetResults':[1,2,3,4,5,6,7,8,9,10]}
+
+@app.route('/data2')
+def index():
+    return {'dataSetResults':[1,2,3,4,5,6,7,8,9,10]}
+
+@app.route('/data')
 def index():
     return {'dataSetResults':[1,2,3,4,5,6,7,8,9,10]}
 
