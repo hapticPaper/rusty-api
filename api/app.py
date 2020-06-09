@@ -6,9 +6,9 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/welcome')
-def welcome():
-    return render_template('index.html', name='ian')
+@app.route('/welcome/<name>')
+def welcome(name):
+    return render_template('/welcome.html', name=name)
 
 
 @app.route('/')
