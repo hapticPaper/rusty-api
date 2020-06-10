@@ -8,7 +8,7 @@ function updateData(){
     colors = []
     cnvs = document.createElement("canvas")
     ctx = cnvs.getContext('2d')
-    fetch(`/${endpoint}?length=${points}`).then(data=>data.json()).then(d=>{
+    fetch(`${endpoint}?length=${points}`).then(data=>data.json()).then(d=>{
         console.log(d);
         chartData=d.dataSetResults;
         d.dataSetResults.forEach(n=>{

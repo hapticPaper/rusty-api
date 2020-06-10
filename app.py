@@ -2,6 +2,7 @@ from flask import Flask, jsonify, render_template, send_from_directory, request
 from flask_restful import reqparse
 from flask_cors import CORS
 import os
+import random
 
 app = Flask(__name__)
 CORS(app)
@@ -18,14 +19,17 @@ def index():
 
 @app.route('/endpoints')
 def endpoints():
-    return {'endpoints':['linear','linear100','base2']}   
+    return {'endpoints':['linear','linear100','base2', 'random', 'fib', 'x4']} 
+
 
 @app.route('/charts')
 def charts():
-    return {'charts':['bar','line','doughnut']}   
+    return {'charts':['bar','line','doughnut', 'radar', 'polarArea']}   
 
-@app.route('/welcome/<name>')
-def welcome(name):
+
+@app.route('/welcome')
+def welcome():
+    name = request.args.get('name', '!')
     return render_template('/welcome.html', name=name)
 
 
@@ -41,6 +45,11 @@ def data1():
     length = getLength()
     return {'dataSetResults':[i for i in range(1, length+1)]}
 
+@app.route('/x4')
+def x4():
+    length = getLength()
+    return {'dataSetResults':[ 4*i for i in range(1, length+1)]}
+
 
 @app.route('/linear100')
 def data2():
@@ -52,6 +61,20 @@ def data3():
     length = getLength()
     return {'dataSetResults':[2 ** i for i in range(1, length+1)]}
 
+@app.route('/random')
+def randomSet():
+    length = getLength()
+    return {'dataSetResults':[random.randint(1,100) for i in range(1, length+1)]}
+
+@app.route('/fib')
+def fib():
+    length = getLength()
+    a = b = 1
+    fset = [a, b]
+    for i in range(1, length-1):
+        a, b = a + b, a
+        fset.append(a)
+    return {'dataSetResults':fset[:length]}
 
 @app.route('/favicon.ico')
 def favicon():
@@ -59,4 +82,4 @@ def favicon():
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 if __name__ =='__main__':
-    app.run(debug=True, threaded=True, host='0.0.0.0', port=os.environ['PORT'])
+    app.run(threaded=True, host='0.0.0.0', port=os.environ['PORT'])
