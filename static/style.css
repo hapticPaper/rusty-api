@@ -11,7 +11,7 @@ h1 {
     font-family: 'Piedra', cursive;
 }
 
-.col-4 {
+.col-4, .col-1, .col-2, .col-3{
     margin-top: auto; 
     margin-bottom: auto;
 }

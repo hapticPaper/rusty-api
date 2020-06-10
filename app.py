@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, render_template, send_from_directory
+from flask import Flask, jsonify, render_template, send_from_directory, request
+from flask_restful import reqparse
 from flask_cors import CORS
 import os
 
@@ -28,17 +29,28 @@ def welcome(name):
     return render_template('/welcome.html', name=name)
 
 
+def getLength():
+    length = request.args.get('length', None)
+    if length:
+        return min(int(length), 1000)
+    else:
+        return 10
+
 @app.route('/data1')
 def data1():
-    return {'dataSetResults':[1,2,3,4,5,6,7,8,9,10]}
+    length = getLength()
+    return {'dataSetResults':[i for i in range(1, length+1)]}
+
 
 @app.route('/data2')
 def data2():
-    return {'dataSetResults':[100*i for i in [1,2,3,4,5,6,7,8,9,10]]}
+    length = getLength()
+    return {'dataSetResults':[100*i for i in range(1, length+1)]}
 
 @app.route('/data3')
 def data3():
-    return {'dataSetResults':[2 ** i for i in [1,2,3,4,5,6,7,8,9,10]]}
+    length = getLength()
+    return {'dataSetResults':[2 ** i for i in range(1, length+1)]}
 
 
 @app.route('/favicon.ico')
@@ -47,4 +59,4 @@ def favicon():
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 if __name__ =='__main__':
-    app.run(threaded=True, host='0.0.0.0', port=os.environ['PORT'])
+    app.run(debug=True, threaded=True, host='0.0.0.0', port=os.environ['PORT'])
