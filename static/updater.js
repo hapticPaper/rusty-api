@@ -23,7 +23,7 @@ function updateData(){
             labels: chartData,
             datasets: [{
                 
-                label: 'My First dataset',
+                label: endpoint,
                 backgroundColor: colors,
                 borderColor: colors,
                 data: chartData
