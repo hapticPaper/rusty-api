@@ -2,13 +2,22 @@ from flask import Flask, jsonify, render_template, send_from_directory
 from flask_cors import CORS
 import os
 
-app = Flask(os.path.join('rustyAPIserver'))
+app = Flask(__name__)
 CORS(app)
 
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template('/dashboard.html')
 
 @app.route('/')
 def index():
     return render_template('/dashboard.html')
+
+
+@app.route('/endpoints')
+def endpoints():
+    return {'endpoints':['data1','data2','data3']}   
 
 @app.route('/welcome/<name>')
 def welcome(name):
@@ -25,7 +34,7 @@ def data2():
 
 @app.route('/data3')
 def data3():
-    return {'dataSetResults':{i:2 ** i for i in [1,2,3,4,5,6,7,8,9,10]}}
+    return {'dataSetResults':[2 ** i for i in [1,2,3,4,5,6,7,8,9,10]]}
 
 
 @app.route('/favicon.ico')
