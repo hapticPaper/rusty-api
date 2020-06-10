@@ -1,8 +1,10 @@
 
 function updateData(){
     endpoint = $('#dataSelect').val()
+    chartType = $('#chartSelect').val()
     htmlList = []
     chartData = []
+    colors = []
     cnvs = document.createElement("canvas")
     ctx = cnvs.getContext('2d')
     fetch(`/${endpoint}`).then(data=>data.json()).then(d=>{
@@ -10,10 +12,11 @@ function updateData(){
         chartData=d.dataSetResults;
         d.dataSetResults.forEach(n=>{
             htmlList.push(`<b>Number:</b>${n}`);
+            colors.push(`rgb(${255 * Math.random()},${255 * Math.random()},${255 * Math.random()})`)
     });
     var chart = new Chart(ctx, {
         // The type of chart we want to create
-        type: 'bar',
+        type: chartType,
     
         // The data for our dataset
         data: {
@@ -21,8 +24,8 @@ function updateData(){
             datasets: [{
                 
                 label: 'My First dataset',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: colors,
+                borderColor: colors,
                 data: chartData
             }]
         },

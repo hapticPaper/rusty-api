@@ -19,6 +19,10 @@ def index():
 def endpoints():
     return {'endpoints':['data1','data2','data3']}   
 
+@app.route('/charts')
+def charts():
+    return {'charts':['bar','line','doughnut']}   
+
 @app.route('/welcome/<name>')
 def welcome(name):
     return render_template('/welcome.html', name=name)
