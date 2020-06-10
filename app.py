@@ -18,7 +18,7 @@ def index():
 
 @app.route('/endpoints')
 def endpoints():
-    return {'endpoints':['data1','data2','data3']}   
+    return {'endpoints':['linear','linear100','base2']}   
 
 @app.route('/charts')
 def charts():
@@ -36,18 +36,18 @@ def getLength():
     else:
         return 10
 
-@app.route('/data1')
+@app.route('/linear')
 def data1():
     length = getLength()
     return {'dataSetResults':[i for i in range(1, length+1)]}
 
 
-@app.route('/data2')
+@app.route('/linear100')
 def data2():
     length = getLength()
     return {'dataSetResults':[100*i for i in range(1, length+1)]}
 
-@app.route('/data3')
+@app.route('/base2')
 def data3():
     length = getLength()
     return {'dataSetResults':[2 ** i for i in range(1, length+1)]}
