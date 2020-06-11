@@ -13,7 +13,7 @@ function updateData(){
         chartData=d.dataSetResults;
         d.dataSetResults.forEach(n=>{
             htmlList.push(`<b>Number:</b>${n}`);
-            colors.push(`rgb(${255 * Math.random()},${255 * Math.random()},${255 * Math.random()})`)
+            colors.push(`rgb(${100 * Math.random()},${10 * Math.random()},${255 * Math.random()})`)
     });
     var chart = new Chart(ctx, {
         // The type of chart we want to create
