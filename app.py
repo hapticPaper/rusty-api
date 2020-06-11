@@ -26,7 +26,10 @@ def endpoints():
 def charts():
     return {'charts':['bar','line','doughnut', 'radar', 'polarArea']}   
 
-
+"""
+THIS NEXT ROUTE SHOULDNT BE HERE
+ITS ANTITHETICAL TO THE REQUIREMENTS
+"""
 @app.route('/welcome')
 def welcome():
     name = request.args.get('name', '!')
