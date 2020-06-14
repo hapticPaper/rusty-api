@@ -3,23 +3,22 @@ from flask_restful import reqparse
 from flask_cors import CORS
 import os
 import random
+import re, json
+import math
 
 app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/dashboard')
-def dashboard():
-    return render_template('/dashboard.html')
 
 @app.route('/')
 def index():
     return render_template('/dashboard.html')
 
 
-@app.route('/endpoints')
-def endpoints():
-    return {'endpoints':['linear','linear100','base2', 'random', 'fib', 'x4']} 
+@app.route('/datasets')
+def datasets():
+    return {'datasets':['linear','linear100','base2', 'random', 'fib', 'x4', 'custom']} 
 
 
 @app.route('/charts')
@@ -47,6 +46,33 @@ def getLength():
 def data1():
     length = getLength()
     return {'dataSetResults':[i for i in range(1, length+1)]}
+
+@app.route('/custom', methods=['POST', 'GET'])
+def custom():
+    pattern = "[0-9]x|\)x|x\(|[0-9]m|[a-z]x"
+    functions = ['sqrt', 'sin', 'cos', 'tan', 'pi', 'log', 'log10']
+    if request.method=='GET':
+        return {'error':"This endpoint only accepts post requests with a 'formula' parameter. For example 'formula=2x'"}
+    else:
+        if len(request.data)>0:
+            formula =  str(json.loads(request.data).get('formula', ''))
+        else: 
+            formula='1/x'
+        
+        for function in functions:
+            formula = formula.replace(function, f"math.{function}")
+        while len(re.findall(pattern, formula))>0:
+            multipliers = re.findall(pattern, formula)
+            for multiplier in multipliers:
+                formula = formula.replace(multiplier, f"{multiplier[0]}*{multiplier[1]}")
+        length=getLength()
+        try:
+            return {'dataSetResults':[eval(formula) for x in range(1, length+1)], 'formula':formula}
+        except Exception as e:
+            return {'error': str(e), "dataSetResults":[]}
+        
+    return {'dataSetResults':[eval(formula) for x in range(1, length+1)]}
+
 
 @app.route('/x4')
 def x4():
@@ -85,4 +111,4 @@ def favicon():
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 if __name__ =='__main__':
-    app.run(threaded=True, host='0.0.0.0', port=os.environ['PORT'])
+    app.run(debug=True, threaded=True, host='0.0.0.0', port=os.environ['PORT'])

@@ -1,6 +1,6 @@
 function dataEndpoints() {
-    fetch('/endpoints').then(data=>data.json()).then(d=>{
-    d.endpoints.forEach(n=>{
+    fetch('/datasets').then(data=>data.json()).then(d=>{
+    d.datasets.forEach(n=>{
         o = document.createElement("option")
         o.text = n
         document.getElementById('dataSelect').add(o)
@@ -8,6 +8,8 @@ function dataEndpoints() {
     updateData()
 })
 }
+
+
 
 fetch('/charts').then(data=>data.json()).then(d=>{
     d.charts.forEach(n=>{
